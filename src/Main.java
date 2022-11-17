@@ -23,7 +23,12 @@ public class Main {
     public static void printInfo(Car car) {
         System.out.println(car.getBrand() + " " + car.getModel() + "," + car.getYear() + " года выпуска, сборка - " +
                 car.getCountry() + ", цвет -" + car.getColor() + ", объем двигателя-" + car.getEngineVolume() +
-                ", коробка передач : "+car.getTransmission()+ ", тип кузова: "+car.getBodytype()+", количество мест- "+
-                car.getNumberOfSeats()+", "+(car.getWinterTires()? "летняя" : "зимняя")+"резина");
+                ", коробка передач : " + car.getTransmission() + ", тип кузова: " + car.getBodytype() + ", количество мест- " +
+                car.getNumberOfSeats() + ", " + (car.getWinterTires() ? "летняя" : "зимняя") + "резина" +
+                ", " + (car.getKey().isKeylessAccess() ? "безключевой доступ" : "ключевой доступ") +
+                ", " + (car.getKey().isRemoteEnginesStart() ? "безключевой доступ" : "обычный запуск") +
+                ", номер страховки: " + car.getInsurance().getNumber() +
+                ", стоимость страховки: " + car.getInsurance().getCost() +
+                ", срок действия страховаки: " + car.getInsurance().getInsuranceValidityPeriod());
     }
 }
