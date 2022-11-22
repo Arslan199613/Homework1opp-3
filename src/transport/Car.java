@@ -2,14 +2,10 @@ package transport;
 
 import java.time.LocalDate;
 
-public class Car {
-    private final String brand;
-    private final String model;
-    private double engineVolume;
-    private String color;
-    private final int year;
-    private final String country;
+public class Car extends Transport {
 
+
+    private double engineVolume;
     private String transmission;
     private String bodytype;
     private String registrationNumber;
@@ -18,97 +14,48 @@ public class Car {
     private Key key;
     private Insurance insurance;
 
-
-    public Car(String brand,
-               String model,
-               double engineVolume,
-               String color,
-               int year,
-               String country,
-               String transmission,
-               String bodytype,
-               String registrationNumber,
-               int numberOfSeats,
-               boolean winterTires,
-               Key key,
-               Insurance insurance) {
-        if (brand == null) {
-            this.brand = "default";
-        } else {
-            this.brand = brand;
-        }
-        if (model == null) {
-            this.model = "default";
-        } else {
-            this.model = model;
-        }
+    public Car(String brand, String model, int year, String country, double engineVolume, String transmission, String bodytype, String registrationNumber, int numberOfSeats, boolean winterTires, Key key, Insurance insurance) {
+        super(brand, model, year, country);
         this.engineVolume = engineVolume;
-        if (color == null) {
-            this.color = "белый";
-        } else {
-            this.color = color;
-        }
-        if (country == null) {
-            this.country = "default";
-        } else {
-            this.country = country;
-        }
-        this.year = year;
         if (transmission == null) {
             this.transmission = "МККП";
         } else {
             this.transmission = transmission;
-        }
-        if (registrationNumber == null) {
-            this.registrationNumber = "х000х000";
-        } else {
-            this.registrationNumber = registrationNumber;
         }
         if (bodytype == null) {
             this.bodytype = "седан";
         } else {
             this.bodytype = bodytype;
         }
-        if (key == null) {
-            this.key = new Key();
+        if (registrationNumber == null) {
+            this.registrationNumber = "х000х000";
         } else {
-            this.key = key;
-        }
-        if (insurance== null) {
-            this.insurance = new Insurance();
-        } else {
-            this.insurance = insurance;
-        }
+            this.registrationNumber = registrationNumber;
+            this.numberOfSeats = numberOfSeats;
+            this.winterTires = true;
+            if (key == null) {
+                this.key = new Key();
+            } else {
+                this.key = key;
+            }
+            if (insurance == null) {
+                this.insurance = new Insurance();
+            } else {
+                this.insurance = insurance;
+            }
 
-        this.numberOfSeats = numberOfSeats;
-        this.winterTires = true;
-
+        }
     }
 
-    public Car(String brand, String model, double engineVolume, String color, int year, String country) {
+    public Car(String brand, String model, int year, String country, double engineVolume) {
+        super(brand, model, year, country);
+        this.engineVolume = engineVolume;
+    }
 
-        this(
-                brand,
-                model,
-                engineVolume,
-                color,
-                year,
-                country,
-                "МКПП",
-                "х000х000",
-                "седан",
-                5,
-                true,
-                new Key(),
-                new Insurance()
-        );
-
-        this.transmission = "МКПП";
-        this.registrationNumber = "х000х000";
-        this.bodytype = "седан";
-        this.numberOfSeats = numberOfSeats;
-        this.winterTires = true;
-
+    @Override
+    public void refill() {
+        System.out.println("Можно заправлять бензином или дизелем на заправке");
+        System.out.println("Можно заряжать на специальных электропарках, если это электрокар");
     }
 
     public double getEngineVolume() {
@@ -117,18 +64,7 @@ public class Car {
 
     public void setEngineVolume(double engineVolume) {
         this.engineVolume = engineVolume;
-    }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        if (color == null) {
-            this.color = "белый";
-        } else {
-            this.color = color;
-        }
     }
 
     public String getTransmission() {
@@ -145,7 +81,6 @@ public class Car {
     public String getRegistrationNumber() {
         return registrationNumber;
     }
-
     public void setRegistrationNumber(String registrationNumber) {
         if (registrationNumber == null) {
             this.registrationNumber = "х000х000";
@@ -161,22 +96,6 @@ public class Car {
 
     public void setWinterTires(boolean winterTires) {
         this.winterTires = winterTires;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public String getCountry() {
-        return country;
     }
 
     public String getBodytype() {
@@ -210,15 +129,10 @@ public class Car {
     public boolean isCorrectRegNumber() {
         if (registrationNumber.length() != 9) {
             return false;
-        }
-        char[] chars = registrationNumber.toCharArray();
-        if (!Character.isAlphabetic(chars[0]) || !Character.isAlphabetic(chars[4]) || !Character.isAlphabetic(chars[5])) {
-            return false;
-        }
-        return Character.isDigit(chars[1]) && Character.isDigit(chars[2]) && Character.isDigit(chars[3]) &&
-                Character.isDigit(chars[6]) && Character.isDigit(chars[7]) && Character.isDigit(chars[8]);
-    }
 
+        }
+        return false;
+    }
     public static class Key {
         private final boolean remoteEnginesStart;
         private final boolean keylessAccess;
@@ -253,7 +167,7 @@ public class Car {
                 }
                 this.cost = cost;
                 if (number == null) {
-                    this.number = "112121";
+                    this.number = "112121111";
                 } else {
                     this.number = number;
                 }
@@ -279,7 +193,8 @@ public class Car {
                 }
             }
 
-            public void chectNumber() {
+
+            public void checkNumber() {
                 if (number.length() != 9) {
                     System.out.println("Номер страховки некорректный");
                 }
