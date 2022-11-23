@@ -1,6 +1,6 @@
 package transport;
 
-public class Bus extends Transport{
+public class Bus extends Transport {
     public Bus(String brand, String model, int year, String country, String color, double speed) {
         super(brand, model, year, country, color, speed);
 
@@ -10,5 +10,10 @@ public class Bus extends Transport{
     public void refill() {
         System.out.println("Можно заправлять бензином или дизелем на заправке");
 
+    }
+
+    public String toString() {
+        return  getBrand()+" "+getModel()+", год выпуска-"+getYear()+
+                ", страна-"+getCountry()+", скорость-"+getSpeed();
     }
 }
